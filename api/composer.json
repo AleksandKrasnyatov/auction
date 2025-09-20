@@ -1,0 +1,8 @@
+{
+    "name": "pet-project/auction",
+    "type": "project",
+    "require": {
+        "php": "^7.4"
+    },
+    "license": "BSD-3-Clause"
+}
