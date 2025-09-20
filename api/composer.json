@@ -1,6 +1,10 @@
 {
     "name": "pet-project/auction",
     "type": "project",
+    "config": {
+      "process-timeout": 0,
+      "sort-packages": true
+    },
     "require": {
         "php": "^7.4"
     },
