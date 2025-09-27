@@ -1,7 +1,7 @@
 FROM php:7.4-cli-alpine
 
 RUN apk add --no-cache autoconf g++ make \
-    && pecl install xdebug-2.9.7 \
+    && pecl install xdebug-3.1.5 \
     && rm -rf /tmp/pear \
     && docker-php-ext-enable xdebug
 
@@ -14,8 +14,7 @@ COPY ./development/php/conf.d /usr/local/etc/php/conf.d
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
-RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --version=1.10.26 --quiet \
-    && composer global require hirak/prestissimo --no-plugins --no-scripts \
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --version=2.8.5 --quiet \
     && rm -rf /root/.composer/cache
 
 WORKDIR /app
