@@ -8,7 +8,9 @@ use Slim\Factory\AppFactory;
 
 return static function (ContainerInterface $container): App {
     $app = AppFactory::createFromContainer($container);
+    /** @psalm-suppress InvalidArgument */
     (require __DIR__ . '/middleware.php')($app, $container);
+    /** @psalm-suppress InvalidArgument */
     (require __DIR__ . '/routes.php')($app);
     return $app;
 };
