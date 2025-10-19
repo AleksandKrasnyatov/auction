@@ -16,13 +16,19 @@
     },
     "require-dev": {
         "overtrue/phplint": "^3.4",
+        "phpunit/phpunit": "^8.5",
         "roave/security-advisories": "dev-master",
         "squizlabs/php_codesniffer": "^4.0",
-        "vimeo/psalm": "^5.26"
+        "vimeo/psalm": "^3.8"
     },
     "autoload": {
       "psr-4": {
         "App\\": "src/"
+      }
+    },
+    "autoload-dev": {
+      "psr-4": {
+        "Test\\": "tests/"
       }
     },
     "scripts": {
@@ -30,6 +36,7 @@
       "cs-check": "phpcs",
       "cs-fix": "phpcbf",
       "psalm": "psalm",
+      "test": "phpunit --colors=always",
       "app": "php bin/app.php --ansi"
     }
 }
