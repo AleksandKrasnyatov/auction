@@ -10,9 +10,11 @@
         "php": "^7.4",
         "ext-json": "*",
         "php-di/php-di": "^6.0",
+        "ramsey/uuid": "^3.9",
         "slim/psr7": "^1.6",
         "slim/slim": "^4.15",
-        "symfony/console": "^5.4"
+        "symfony/console": "^5.4",
+        "webmozart/assert": "^1.6"
     },
     "require-dev": {
         "overtrue/phplint": "^3.4",
