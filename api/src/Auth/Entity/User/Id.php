@@ -13,7 +13,6 @@ class Id
 
     public function __construct(string $value)
     {
-        Assert::notEmpty($value);
         Assert::uuid($value);
         $this->value = mb_strtolower($value);
     }
