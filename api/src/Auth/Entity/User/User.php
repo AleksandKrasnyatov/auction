@@ -13,6 +13,7 @@ class User
     private Email $email;
     private string $passwordHash;
     private ?Token $joinConfirmToken;
+    private Status $status;
 
     public function __construct(
         Id $id,
@@ -24,8 +25,19 @@ class User
         $this->id = $id;
         $this->date = $date;
         $this->email = $email;
+        $this->status = Status::wait();
         $this->passwordHash = $passwordHash;
         $this->joinConfirmToken = $token;
+    }
+
+    public function isWait(): bool
+    {
+        return $this->status->isWait();
+    }
+
+    public function isActive(): bool
+    {
+        return $this->status->isActive();
     }
 
     public function getId(): Id

@@ -32,5 +32,8 @@ class RequestTest extends TestCase
         self::assertSame($email, $user->getEmail());
         self::assertSame($hash, $user->getPasswordHash());
         self::assertSame($token, $user->getJoinConfirmToken());
+
+        self::assertTrue($user->isWait());
+        self::assertFalse($user->isActive());
     }
 }
