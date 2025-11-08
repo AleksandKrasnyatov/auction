@@ -29,6 +29,13 @@ class UserBuilder
         $this->joinConfirmToken = new Token(Uuid::uuid4()->toString(), $this->date->modify('+1 day'));
     }
 
+    public function withJoinConfirmToken(Token $token): self
+    {
+        $clone = clone $this;
+        $clone->joinConfirmToken = $token;
+        return $clone;
+    }
+
     public function active(): self
     {
         $clone = clone $this;
