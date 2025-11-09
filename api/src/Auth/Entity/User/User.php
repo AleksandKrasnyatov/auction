@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Entity\User;
 
+use ArrayObject;
 use DateTimeImmutable;
 use DomainException;
 
@@ -12,23 +13,46 @@ class User
     private Id $id;
     private DateTimeImmutable $date;
     private Email $email;
-    private string $passwordHash;
-    private ?Token $joinConfirmToken;
+    private ?string $passwordHash = null;
     private Status $status;
+    private ?Token $joinConfirmToken = null;
+    private ArrayObject $networks;
 
-    public function __construct(
+    private function __construct(
+        Id $id,
+        DateTimeImmutable $date,
+        Email $email,
+        Status $status
+    ) {
+        $this->id = $id;
+        $this->date = $date;
+        $this->email = $email;
+        $this->status = $status;
+        $this->networks = new ArrayObject();
+    }
+
+    public static function joinByNetwork(
+        Id $id,
+        DateTimeImmutable $date,
+        Email $email,
+        NetworkIdentity $identity
+    ): self {
+        $user = new self($id, $date, $email, Status::active());
+        $user->networks->append($identity);
+        return $user;
+    }
+
+    public static function requestJoinByEmail(
         Id $id,
         DateTimeImmutable $date,
         Email $email,
         string $passwordHash,
         ?Token $token
-    ) {
-        $this->id = $id;
-        $this->date = $date;
-        $this->email = $email;
-        $this->status = Status::wait();
-        $this->passwordHash = $passwordHash;
-        $this->joinConfirmToken = $token;
+    ): self {
+        $user = new self($id, $date, $email, Status::wait());
+        $user->passwordHash = $passwordHash;
+        $user->joinConfirmToken = $token;
+        return $user;
     }
 
     public function confirmJoin(string $token, DateTimeImmutable $date): void
@@ -74,5 +98,14 @@ class User
     public function getJoinConfirmToken(): ?Token
     {
         return $this->joinConfirmToken;
+    }
+
+    /**
+     * @return NetworkIdentity[]
+     */
+    public function getNetworks(): array
+    {
+        /** @var NetworkIdentity[] */
+        return $this->networks->getArrayCopy();
     }
 }
