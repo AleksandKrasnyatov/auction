@@ -18,10 +18,10 @@ class Handler
     private Flusher $flusher;
     private UserRepository $users;
 
-    public function __construct(UserRepository $userRepository, Flusher $flusher)
+    public function __construct(UserRepository $users, Flusher $flusher)
     {
         $this->flusher = $flusher;
-        $this->users = $userRepository;
+        $this->users = $users;
     }
 
     public function handle(Command $command): void

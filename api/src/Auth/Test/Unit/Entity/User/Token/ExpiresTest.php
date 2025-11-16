@@ -10,21 +10,20 @@ use PHPUnit\Framework\TestCase;
 use Ramsey\Uuid\Uuid;
 
 /**
- * covers Token::validate
+ * covers Token::isExpiredTo
  */
-class ValidateTest extends TestCase
+class ExpiresTest extends TestCase
 {
-    /**
-     * @doesNotPerformAssertions
-     */
     public function testSuccess(): void
     {
         $token = new Token(
-            $value = Uuid::uuid4()->toString(),
+            Uuid::uuid4()->toString(),
             $expires = new DateTimeImmutable()
         );
 
-        $token->validate($value, $expires->modify('-1 secs'));
+        self::assertFalse($token->isExpiredTo($expires->modify('-1 sec')));
+        self::assertTrue($token->isExpiredTo($expires));
+        self::assertTrue($token->isExpiredTo($expires->modify('+1 sec')));
     }
 
     public function testWrong(): void
