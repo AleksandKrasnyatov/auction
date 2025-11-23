@@ -12,6 +12,7 @@ interface UserRepository
     public function hasByNetwork(NetworkIdentity $identity): bool;
 
     public function findByConfirmToken(string $token): ?User;
+    public function findByPasswordResetToken(string $token): ?User;
     /**
      * @throws DomainException
      */
