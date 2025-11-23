@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Auth\Entity\User;
 
+use App\Auth\Service\PasswordHasher;
 use ArrayObject;
 use DateTimeImmutable;
 use DomainException;
@@ -54,6 +55,17 @@ class User
         $user->passwordHash = $passwordHash;
         $user->joinConfirmToken = $token;
         return $user;
+    }
+
+    public function changePassword(string $current, string $new, PasswordHasher $hasher)
+    {
+        if ($this->passwordHash === null) {
+            throw new DomainException('User does not have an old password.');
+        }
+        if (!$hasher->validate($current, $this->passwordHash)) {
+            throw new DomainException('Incorrect current password.');
+        }
+        $this->passwordHash = $hasher->hash($new);
     }
 
     public function resetPassword(string $token, DateTimeImmutable $date, string $hash): void
