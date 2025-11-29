@@ -9,6 +9,5 @@ use App\Auth\Entity\User\Token;
 
 interface NewEmailConfirmTokenSender
 {
-
     public function send(Email $email, Token $token): void;
 }

@@ -36,7 +36,7 @@ class ConfirmTest extends TestCase
     {
         $user = (new UserBuilder())->withJoinConfirmToken($token = $this->createToken())->build();
 
-        $this->expectExceptionMessage('Token is invalid');
+        $this->expectExceptionMessage('Token is invalid.');
 
         $user->confirmJoin(
             Uuid::uuid4()->toString(),

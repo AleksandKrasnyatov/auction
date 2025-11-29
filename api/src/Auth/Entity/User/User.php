@@ -14,7 +14,7 @@ class User
     private Id $id;
     private DateTimeImmutable $date;
     private Email $email;
-    private Email $newEmail;
+    private ?Email $newEmail = null;
     private ?string $passwordHash = null;
     private Status $status;
     private ?Token $joinConfirmToken = null;
@@ -57,6 +57,17 @@ class User
         $user->passwordHash = $passwordHash;
         $user->joinConfirmToken = $token;
         return $user;
+    }
+
+    public function confirmEmailChanging(string $token, DateTimeImmutable $date): void
+    {
+        if ($this->newEmailToken === null || $this->newEmail === null) {
+            throw new DomainException('Changing is not requested.');
+        }
+        $this->newEmailToken->validate($token, $date);
+        $this->email = $this->newEmail;
+        $this->newEmail = null;
+        $this->newEmailToken = null;
     }
 
     public function requestEmailChanging(Token $token, DateTimeImmutable $date, Email $email): void
@@ -181,7 +192,7 @@ class User
         return $this->newEmailToken;
     }
 
-    public function getNewEmail(): Email
+    public function getNewEmail(): ?Email
     {
         return $this->newEmail;
     }

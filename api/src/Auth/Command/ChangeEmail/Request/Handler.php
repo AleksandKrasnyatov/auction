@@ -22,7 +22,7 @@ class Handler
 
     public function __construct(
         UserRepository $users,
-        Tokenizer  $tokenizer,
+        Tokenizer $tokenizer,
         NewEmailConfirmTokenSender $sender,
         Flusher $flusher
     ) {
