@@ -61,6 +61,13 @@ class User
         return $user;
     }
 
+    public function remove()
+    {
+        if (!$this->isWait()) {
+            throw new DomainException('Unable to remove active user.');
+        }
+    }
+
     public function changeRole(Role $role): void
     {
         $this->role = $role;
