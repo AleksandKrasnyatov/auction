@@ -17,6 +17,7 @@ class User
     private ?Email $newEmail = null;
     private ?string $passwordHash = null;
     private Status $status;
+    private Role $role;
     private ?Token $joinConfirmToken = null;
     private ?Token $passwordResetToken = null;
     private ?Token $newEmailToken = null;
@@ -32,6 +33,7 @@ class User
         $this->date = $date;
         $this->email = $email;
         $this->status = $status;
+        $this->role = Role::user();
         $this->networks = new ArrayObject();
     }
 
@@ -57,6 +59,11 @@ class User
         $user->passwordHash = $passwordHash;
         $user->joinConfirmToken = $token;
         return $user;
+    }
+
+    public function changeRole(Role $role): void
+    {
+        $this->role = $role;
     }
 
     public function confirmEmailChanging(string $token, DateTimeImmutable $date): void
@@ -195,5 +202,10 @@ class User
     public function getNewEmail(): ?Email
     {
         return $this->newEmail;
+    }
+
+    public function getRole(): Role
+    {
+        return $this->role;
     }
 }
